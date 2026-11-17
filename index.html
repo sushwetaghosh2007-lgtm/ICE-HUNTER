@@ -181,19 +181,177 @@ h2 { margin-bottom: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .chip, .btn, .tab { transition: background 0.15s, border-color 0.15s, color 0.15s; }
 }
+/* ---------- Landing: scroll story ---------- */
+:root { --sp0: #02030c; --sp1: #0b1233; --sun: #ffb347; --hero-fg: #f2f6ff; --hero-dim: #aebbe0; }
+html { scroll-behavior: smooth; }
+#site section { scroll-margin-top: 64px; }
+#readbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--accent), var(--warn)); pointer-events: none; }
+#topnav { position: fixed; top: 3px; left: 0; right: 0; z-index: 55; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); transform: translateY(-120%); transition: transform .35s ease; }
+#topnav.show { transform: none; }
+#topnav .brand { background: none; border: 0; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--fg); padding: 4px 0; }
+.navlinks { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.navlinks button { background: none; border: 0; color: var(--dim); font-size: 13px; padding: 6px 10px; border-radius: 6px; }
+.navlinks button:hover, .navlinks button.on { color: var(--fg); }
+.navlinks button.on { background: var(--surface2); }
+.navlinks .navcta { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.navlinks .navcta:hover, .navlinks .navcta.on { background: var(--accent); color: var(--accent-ink); filter: brightness(1.1); }
+#totop { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 55; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font-size: 18px; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .3s, transform .3s; }
+#totop.show { opacity: 1; pointer-events: auto; transform: none; }
+#totop:hover { border-color: var(--accent); }
+
+#hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--sp0); color: var(--hero-fg); isolation: isolate; }
+#hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; background: linear-gradient(transparent, var(--bg)); z-index: 1; pointer-events: none; }
+#hero-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+.hero-in { position: relative; z-index: 2; width: 100%; max-width: 1240px; margin: 0 auto; padding-block: 96px 120px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.hero-in .eyebrow { color: var(--hero-dim); }
+.hero-in h1 { font-size: clamp(46px, 9.5vw, 104px); line-height: 0.98; color: var(--hero-fg); max-width: 11ch; }
+.hero-in h1 em { font-style: normal; background: linear-gradient(100deg, #8fd3ff 10%, #ffd36b 55%, #ff9a6b 90%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s ease-in-out infinite alternate; }
+@keyframes shimmer { to { background-position: 100% 0; } }
+.hero-in .lede { color: var(--hero-dim); font-size: clamp(15px, 2vw, 19px); max-width: 52ch; line-height: 1.55; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 6px; }
+.hbtn { font-family: var(--font-display); font-weight: 600; font-size: 16px; padding: 12px 22px; border-radius: 999px; border: 1px solid rgba(190,210,255,.4); background: rgba(255,255,255,.04); color: var(--hero-fg); transition: transform .2s, background .2s, border-color .2s; }
+.hbtn:hover { transform: translateY(-2px); border-color: #8fd3ff; background: rgba(143,211,255,.1); }
+.hbtn.primary { background: linear-gradient(100deg, #8fd3ff, #ffd36b); color: #06233a; border-color: transparent; box-shadow: 0 8px 30px rgba(143,211,255,.25); }
+.hbtn.primary:hover { background: linear-gradient(100deg, #a6dcff, #ffe08f); }
+.hlink { background: none; border: 0; color: var(--hero-dim); font-family: var(--font-mono); font-size: 12px; padding: 8px; }
+.hlink:hover { color: var(--hero-fg); }
+.scrollcue { position: absolute; z-index: 2; left: 50%; bottom: 22px; transform: translateX(-50%); background: none; border: 0; color: var(--hero-dim); font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.scrollcue i { width: 1px; height: 38px; background: linear-gradient(var(--hero-dim), transparent); position: relative; overflow: hidden; }
+.scrollcue i::after { content: ""; position: absolute; left: -1px; top: -12px; width: 3px; height: 12px; border-radius: 2px; background: #8fd3ff; animation: drip 1.8s ease-in infinite; }
+@keyframes drip { to { transform: translateY(54px); opacity: 0; } }
+.h-r { opacity: 0; transform: translateY(26px); }
+#hero.go .h-r { animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+#hero.go .h-r:nth-child(2) { animation-delay: .12s; } #hero.go .h-r:nth-child(3) { animation-delay: .26s; } #hero.go .h-r:nth-child(4) { animation-delay: .4s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+.sec-head { display: flex; flex-direction: column; gap: 8px; max-width: 1240px; margin: 0 auto; padding: 72px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); }
+.sec-head h2 { font-size: clamp(26px, 4.4vw, 44px); line-height: 1.08; max-width: 20ch; }
+.sec-sub { color: var(--dim); }
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.reveal.in { opacity: 1; transform: none; }
+
+.story-grid { max-width: 1240px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px)); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; --vh: min(68vh, 560px); }
+.story-vis { position: sticky; top: calc(50vh - var(--vh) / 2); height: var(--vh); align-self: start; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #04081a; box-shadow: 0 20px 60px rgba(0,0,0,.35); z-index: 2; }
+.story-vis canvas { width: 100%; height: 100%; display: block; }
+.vis-cap { position: absolute; left: 14px; bottom: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #9cc4ee; pointer-events: none; }
+.story-steps { display: flex; flex-direction: column; }
+.sstep { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; gap: 10px; opacity: .3; transform: translateX(8px); transition: opacity .4s, transform .4s; }
+.sstep.on { opacity: 1; transform: none; }
+.snum { font-family: var(--font-mono); font-size: 13px; color: var(--accent); letter-spacing: .2em; }
+.sstep h3 { font-size: clamp(24px, 3.2vw, 36px); line-height: 1.1; }
+.sstep p { color: var(--dim); font-size: 16px; max-width: 42ch; line-height: 1.6; }
+.story-steps .sstep:last-child { min-height: 70vh; }
+
+.stats { max-width: 1240px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 40px max(20px, env(safe-area-inset-left, 0px)); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.stat { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.stat::before { content: ""; position: absolute; inset: auto -30% -60% -30%; height: 90%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent); pointer-events: none; }
+.stat b { font-family: var(--font-display); font-size: clamp(34px, 5vw, 56px); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat > span { color: var(--dim); font-size: 13px; }
+.stat b { white-space: nowrap; }
+@media (max-width: 480px) { .stat b { font-size: 30px; } }
+
+.tgrid { max-width: 1240px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 56px max(20px, env(safe-area-inset-left, 0px)); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; perspective: 900px; }
+.tcard { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; color: var(--fg); font: inherit; transform-style: preserve-3d; transition: border-color .2s, box-shadow .2s, opacity .7s, transform .25s; position: relative; overflow: hidden; }
+.tcard.reveal.in { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.tcard::after { content: ""; position: absolute; inset: 0; background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%); opacity: 0; transition: opacity .2s; pointer-events: none; }
+.tcard:hover { border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,0,0,.25); }
+.tcard:hover::after { opacity: 1; }
+.tcard b { font-family: var(--font-display); font-size: 19px; line-height: 1.15; }
+.tcard > span:last-child { color: var(--dim); font-size: 13px; line-height: 1.5; }
+.ttag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--warn); }
+
+.tool-head { display: flex; flex-direction: column; gap: 8px; padding-top: 24px; scroll-margin-top: 64px; }
+.tool-head h2 { font-size: clamp(26px, 4.4vw, 44px); line-height: 1.08; }
+.tool-head p { color: var(--dim); max-width: 60ch; }
+.page { position: relative; }
+.panel { position: relative; }
+.panel::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%); opacity: 0; transition: opacity .25s; pointer-events: none; }
+.panel:hover::after { opacity: 1; }
+
+@media (max-width: 920px) {
+  .story-grid { grid-template-columns: minmax(0, 1fr); gap: 0; --vh: 42svh; }
+  .story-vis { top: 56px; }
+  .sstep { min-height: 62vh; background: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tgrid .tcard:last-child { grid-column: 1 / -1; }
+  .navlinks button:not(.navcta) { display: none; }
+}
+@media (max-width: 480px) { .tgrid { grid-template-columns: minmax(0, 1fr); } .tgrid .tcard:last-child { grid-column: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .h-r { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
+  .scrollcue i::after, .hero-in h1 em { animation: none; }
+}
+
 </style>
 
+<div id="site">
+<div id="readbar" aria-hidden="true"></div>
+<nav id="topnav" aria-label="Sections">
+  <button class="brand" type="button" data-go="hero">Ice Hunter</button>
+  <div class="navlinks">
+    <button type="button" data-go="story">The idea</button>
+    <button type="button" data-go="numbers">By the numbers</button>
+    <button type="button" data-go="targets">Targets</button>
+    <button type="button" data-go="tool" class="navcta">Try it</button>
+  </div>
+</nav>
+<button id="totop" type="button" aria-label="Back to top" data-go="hero">&uarr;</button>
+
+<section id="hero" aria-label="Ice Hunter">
+  <canvas id="hero-cv" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <div class="eyebrow h-r">NASA SPHEREx &middot; time-lapse and ice lab</div>
+    <h1 class="h-r">Watch the sky <em>change.</em></h1>
+    <p class="lede h-r">Pick any patch of sky and watch SPHEREx&rsquo;s infrared images of it play like a short film. Movers slide across the field, variable stars flicker, and every pixel hides a spectrum.</p>
+    <div class="hero-cta h-r">
+      <button class="hbtn primary" type="button" data-go="tool">Start hunting <span aria-hidden="true">&rarr;</span></button>
+      <button class="hbtn" type="button" data-go="story">See how it works</button>
+      <button class="hlink" id="replay-intro" type="button">&#8635; Replay intro</button>
+    </div>
+  </div>
+  <button class="scrollcue" type="button" data-go="story" aria-label="Scroll to the story"><span>Scroll</span><i></i></button>
+</section>
+
+<section id="story" aria-label="How it works">
+  <div class="sec-head reveal"><div class="eyebrow">The idea</div><h2>Three scrolls from raw sky to ice</h2></div>
+  <div class="story-grid">
+    <div class="story-vis">
+      <canvas id="story-cv" role="img" aria-label="Animated illustration: SPHEREx epochs of one sky patch, then the difference image showing a mover, then a spectrum with ice absorption dips"></canvas>
+      <div class="vis-cap" id="vis-cap" aria-hidden="true"></div>
+    </div>
+    <div class="story-steps">
+      <article class="sstep" data-i="0"><span class="snum">01</span><h3>The same patch, many dates</h3><p>SPHEREx scans the whole sky and comes back to each patch about every six months. Line the visits up on one grid and a pile of snapshots becomes a film.</p></article>
+      <article class="sstep" data-i="1"><span class="snum">02</span><h3>Subtract, and something lights up</h3><p>Take away everything that stayed put. What is left shows up orange where an object is now and blue where it was. That pair is a mover.</p></article>
+      <article class="sstep" data-i="2"><span class="snum">03</span><h3>Every pixel is a spectrum</h3><p>102 colours from 0.75 to 5 &micro;m. Dips near 3.05, 4.27 and 4.67 &micro;m are fingerprints of water, CO&#8322; and CO ice, and the Ice Lab measures them.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="numbers" aria-label="SPHEREx by the numbers">
+  <div class="sec-head reveal"><div class="eyebrow">By the numbers</div><h2>What SPHEREx gives you</h2></div>
+  <div class="stats">
+    <div class="stat reveal" style="--d:.0s"><b><span data-to="102">0</span></b><span>spectral channels</span></div>
+    <div class="stat reveal" style="--d:.08s"><b><span data-to="6">0</span></b><span>detector arrays</span></div>
+    <div class="stat reveal" style="--d:.16s"><b><span data-to="0.75" data-dec="2">0</span>&ndash;<span data-to="5" data-dec="1">0</span></b><span>&micro;m wavelength range</span></div>
+    <div class="stat reveal" style="--d:.24s"><b>~<span data-to="6">0</span></b><span>months between visits</span></div>
+  </div>
+</section>
+
+<section id="targets" aria-label="Targets to try">
+  <div class="sec-head reveal"><div class="eyebrow">Start somewhere</div><h2>Five places the challenge asks you to look</h2><p class="sec-sub">Tap one and the tool below loads it.</p></div>
+  <div class="tgrid">
+    <button class="tcard reveal" type="button" data-key="wise0855" style="--d:.0s"><span class="ttag">mover</span><b>WISE 0855&minus;0714</b><span>One of the coldest known brown dwarfs, and it races across the sky.</span></button>
+    <button class="tcard reveal" type="button" data-key="barnard" style="--d:.07s"><span class="ttag">mover</span><b>Barnard&rsquo;s Star</b><span>The fastest-moving star we see, about 10 arcseconds a year.</span></button>
+    <button class="tcard reveal" type="button" data-key="epsindib" style="--d:.14s"><span class="ttag">faint companion</span><b>&epsilon; Indi B</b><span>A brown dwarf pair circling a nearby star.</span></button>
+    <button class="tcard reveal" type="button" data-key="rwaur" style="--d:.21s"><span class="ttag">variable</span><b>RW Aurigae</b><span>A young star that dims and brightens.</span></button>
+    <button class="tcard reveal" type="button" data-key="rdra" style="--d:.28s"><span class="ttag">variable</span><b>R Draconis</b><span>A giant star that swells and pulses over months.</span></button>
+  </div>
+</section>
+
 <div class="page">
-  <header class="masthead">
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="row" style="justify-content:space-between"><div class="eyebrow">NASA SPHEREx &middot; time-lapse and ice lab</div><button class="chip" id="replay-intro" type="button">&#8635; Replay intro</button></div>
-      <h1>Ice Hunter</h1>
-      <p class="lede">Pick any patch of sky and watch SPHEREx's infrared images of it play like a short film. <b>Moving objects slide across the field, variable stars flicker, and every pixel carries a 0.75 to 5 &micro;m spectrum.</b></p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="steps"><span><b>1</b> Enter a position</span><span><b>2</b> Play the epochs</span><span><b>3</b> Subtract to find changes</span><span><b>4</b> Click a source for its spectrum</span></div>
-    </div>
-  </header>
+  <div id="tool" class="tool-head reveal"><div class="eyebrow">Your turn</div><h2>Pick a patch. Press play.</h2><p>Type a position or choose a target, watch the epochs, subtract to find changes, then click a source for its spectrum.</p></div>
 
   <div class="tabs-main" role="tablist" aria-label="Tools">
     <button class="tabbtn" id="tab-sky" role="tab" aria-selected="true" type="button">Sky time-lapse</button>
@@ -381,6 +539,7 @@ h2 { margin-bottom: 0; }
     <p>Channels follow SPHEREx's design: six detectors with 17 linear-variable-filter channels each, resolving power 41, 35, 110 and 130 across the range. Dust reddening, stellar temperature and noise are simulated. Reported errors are statistical only, and because the window clips the band wings, water columns come out roughly 10&ndash;20% low. The simulated cloud is patterned on Taurus-like clouds, where water ice appears near Av 3.2 mag (Whittet et al. 2001). Real spectra: <a href="https://spherex.caltech.edu/page/data-tools" target="_blank" rel="noopener">SPHEREx data tools (IRSA)</a>.</p>
   </footer>
   </div>
+</div>
 </div>
 
 <div id="intro" role="dialog" aria-label="Ice Hunter intro animation">
@@ -1307,7 +1466,7 @@ const Demo = {
     const rng = mulberry32(hashStr(key)), n = 14 + Math.floor(rng() * 12), cs = 1 / 12, c0 = Math.cos(Math.round(dec0) * D2R), out = [];
     for (let k = 0; k < n; k++) {
       const u = rng();
-      out.push({ ra: (i + rng()) * cs / c0, dec: (j + rng()) * cs, pmra: gaussRand(rng) * 25, pmdec: gaussRand(rng) * 25, epoch: 2016, A: Math.pow(10, -2.9 + 3.5 * Math.pow(u, 1.5)), alpha: 0.8 + rng() * 2.6, ph: rng() * 6.28 });
+      out.push({ ra: (i + rng()) * cs / c0, dec: (j + rng()) * cs, pmra: gaussRand(rng) * 25, pmdec: gaussRand(rng) * 25, epoch: 2016, A: Math.pow(10, -2.2 + 3.2 * Math.pow(u, 1.3)), alpha: 0.8 + rng() * 2.6, ph: rng() * 6.28 });
     }
     this.cells.set(key, out); return out;
   },
@@ -1551,6 +1710,17 @@ const Demo = {
       }
     }
   }
+  /* Light 3x3 binomial smoothing of the displayed frame (NaN-aware). Photometry still uses the unsmoothed products. */
+  function blur3(a, N) {
+    const o = new Float32Array(a.length), w = [1, 2, 1];
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const i = y * N + x; if (a[i] !== a[i]) { o[i] = NaN; continue; }
+      let sum = 0, ws = 0;
+      for (let dy = -1; dy <= 1; dy++) { const yy = y + dy; if (yy < 0 || yy >= N) continue; for (let dx = -1; dx <= 1; dx++) { const xx = x + dx; if (xx < 0 || xx >= N) continue; const v = a[yy * N + xx]; if (v !== v) continue; const k = w[dy + 1] * w[dx + 1]; sum += v * k; ws += k; } }
+      o[i] = sum / ws;
+    }
+    return o;
+  }
   function buildFrames() {
     const { ps, N } = gridSize(); SK.ps = ps; SK.N = N; const mk = maskInt(), frames = [];
     const items = SK.sel.map((rows, k) => ({ k, prods: rows.map(r => SK.prods.get(key(r))).filter(Boolean) })).filter(e => e.prods.length);
@@ -1559,7 +1729,7 @@ const Demo = {
     items.forEach(e => {
       const c = SK.follow && SK.t ? tgtAt(e.mjd) : common, g = skyGrid(c, N, ps);
       const arrs = e.prods.map(p => { const a = reproject(p, g, N, mk); if (SK.bg) smoothBg(a, N); return a; });
-      const data = combine(arrs, SK.combine), lams = e.prods.map(p => { const [x, y] = p.wcs.skyToPix(c.ra, c.dec); return p.wave ? p.wave(x, y).lam : (DET[p.det - 1].lo + DET[p.det - 1].hi) / 2; });
+      const data = blur3(combine(arrs, SK.combine), N), lams = e.prods.map(p => { const [x, y] = p.wcs.skyToPix(c.ra, c.dec); return p.wave ? p.wave(x, y).lam : (DET[p.det - 1].lo + DET[p.det - 1].hi) / 2; });
       frames.push({ k: e.k, mjd: e.mjd, n: e.prods.length, lamMin: Math.min(...lams), lamMax: Math.max(...lams), data, centre: c, prods: e.prods });
     });
     SK.frames = frames; derive();
@@ -1581,7 +1751,7 @@ const Demo = {
     if (!vals.length) { SK.scale = { lo: 0, hi: 1 }; return; }
     const c = SK.cont / 100;
     if (SK.diff) { const ab = Float64Array.from(vals, Math.abs).sort(); const sg = pct(ab, 50) * 1.4826; SK.scale = { lo: -1, hi: 1, s: Math.max(1e-6, pct(ab, 99.9 - 2.5 * c), sg * (8 - 3 * c)) }; return; }
-    const s = Float64Array.from(vals).sort(); const md = pct(s, 50), sg = (md - pct(s, 15.9)) || 1e-6, lo = md - (1.5 - c) * sg, hi = Math.max(pct(s, 99.99 - 3 * c), md + (9 - 5 * c) * sg);
+    const s = Float64Array.from(vals).sort(); const md = pct(s, 50), sg = (md - pct(s, 15.9)) || 1e-6, lo = md + (c + 0.3) * sg, hi = Math.max(pct(s, 99.99 - 3 * c), md + (11 - 6 * c) * sg);
     SK.scale = { lo, hi: Math.max(hi, lo + 1e-6) };
   }
   function findChanges() {
@@ -1874,11 +2044,200 @@ const Demo = {
 
 </script>
 <script>
+/* Scroll-driven landing: starfield hero, sticky scroll story, counters, reveals. Uses mulberry32 and DET from core.js. */
+(() => {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const root = document.documentElement;
+  const site = $('#site'); if (!site) return;
+  root.classList.add('js');
+
+  /* ---- navigation ---- */
+  const go = id => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); };
+  document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); } });
+  const nav = $('#topnav'), prog = $('#readbar'), topBtn = $('#totop'), hero = $('#hero');
+  const navIds = ['story', 'numbers', 'targets', 'tool'];
+
+  /* ---- hero entrance after the intro finishes ---- */
+  const intro = $('#intro');
+  const enter = () => hero.classList.add('go');
+  if (!intro || intro.hidden || reduce) enter();
+  else { new MutationObserver((m, o) => { if (intro.hidden) { enter(); o.disconnect(); } }).observe(intro, { attributes: true, attributeFilter: ['hidden'] }); setTimeout(enter, 14000); }
+
+  /* ---- hero starfield with parallax, orbits and a Sun ---- */
+  const hc = $('#hero-cv'), hx = hc.getContext('2d');
+  let HW = 0, HH = 0, hd = 1, mx = 0, my = 0, tx = 0, ty = 0, heroVis = true, shoot = null, nextShoot = 3000;
+  const HR = mulberry32(2026), hs = [];
+  for (let i = 0; i < 260; i++) hs.push({ x: HR(), y: HR(), z: 0.15 + 0.85 * HR() ** 1.6, p: HR() * 6.28, w: 0.6 + HR() * 1.6, c: HR() < 0.12 ? '#ffd9a8' : HR() < 0.3 ? '#bcd4ff' : '#ffffff' });
+  function hsize() { const r = hc.getBoundingClientRect(); hd = Math.min(2, devicePixelRatio || 1); HW = r.width; HH = r.height; hc.width = Math.round(HW * hd); hc.height = Math.round(HH * hd); }
+  function hdraw(t) {
+    const c = hx; c.setTransform(hd, 0, 0, hd, 0, 0);
+    const g = c.createLinearGradient(0, 0, 0, HH); g.addColorStop(0, '#02030c'); g.addColorStop(1, '#0b1233'); c.fillStyle = g; c.fillRect(0, 0, HW, HH);
+    tx += (mx - tx) * 0.05; ty += (my - ty) * 0.05;
+    const wide = HW > 760, sx = HW * (wide ? 0.76 : 0.5) - tx * 26, sy = HH * (wide ? 0.52 : 0.8) - ty * 16 - scrollY * 0.12, sc = Math.min(HW, HH * 1.4) / 1000;
+    const gl = c.createRadialGradient(sx, sy, 0, sx, sy, 520 * sc + 120);
+    gl.addColorStop(0, 'rgba(255,190,90,.55)'); gl.addColorStop(0.25, 'rgba(255,140,50,.18)'); gl.addColorStop(1, 'rgba(255,120,40,0)'); c.fillStyle = gl; c.fillRect(0, 0, HW, HH);
+    for (const s of hs) {
+      const x = ((s.x * HW - tx * 20 * s.z) % HW + HW) % HW, y = ((s.y * HH - scrollY * 0.16 * s.z - ty * 12 * s.z) % HH + HH) % HH;
+      const a = (0.25 + 0.6 * s.z) * (0.72 + 0.28 * Math.sin(t * 0.0016 * s.w + s.p));
+      c.globalAlpha = a; c.fillStyle = s.c; c.beginPath(); c.arc(x, y, 0.5 + s.z * 1.1, 0, 6.283); c.fill();
+    }
+    c.globalAlpha = 1;
+    const cols = ['#c9b8a8', '#f0c27a', '#6fb1ff', '#ff7b54', '#f3d9a0', '#e8d7a8'];
+    for (let i = 0; i < 6; i++) {
+      const rx = (150 + i * 105) * sc * 1.25, ry = rx * 0.34;
+      c.save(); c.translate(sx, sy); c.rotate(-0.26);
+      c.strokeStyle = 'rgba(160,180,230,.17)'; c.lineWidth = 1; c.beginPath(); c.ellipse(0, 0, rx, ry, 0, 0, 6.283); c.stroke();
+      const a = t * 0.00011 * (7 - i) + i * 1.7, px = Math.cos(a) * rx, py = Math.sin(a) * ry, pr = (3 + (i % 3)) * Math.max(0.8, sc * 1.3);
+      c.fillStyle = cols[i]; c.globalAlpha = 0.18; c.beginPath(); c.arc(px, py, pr * 2.6, 0, 6.283); c.fill(); c.globalAlpha = 1; c.beginPath(); c.arc(px, py, pr, 0, 6.283); c.fill();
+      c.restore();
+    }
+    const sr = 26 * Math.max(0.8, sc * 1.6), core = c.createRadialGradient(sx, sy, 0, sx, sy, sr);
+    core.addColorStop(0, '#fffbe6'); core.addColorStop(0.5, '#ffd36b'); core.addColorStop(1, '#ff9a3c'); c.fillStyle = core; c.beginPath(); c.arc(sx, sy, sr, 0, 6.283); c.fill();
+    if (!shoot && t > nextShoot) { shoot = { x: HW * (0.1 + Math.random() * 0.5), y: HH * Math.random() * 0.4, t0: t }; nextShoot = t + 6000 + Math.random() * 6000; }
+    if (shoot) { const k = (t - shoot.t0) / 900; if (k > 1) shoot = null; else { const x = shoot.x + k * 320, y = shoot.y + k * 130; const gr = c.createLinearGradient(x - 90, y - 36, x, y); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, 'rgba(255,255,255,' + (0.9 * (1 - k)) + ')'); c.strokeStyle = gr; c.lineWidth = 1.6; c.beginPath(); c.moveTo(x - 90, y - 36); c.lineTo(x, y); c.stroke(); } }
+  }
+  hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; });
+
+  /* ---- sticky story canvas ---- */
+  const sc = $('#story-cv'), sx2 = sc.getContext('2d'), cap = $('#vis-cap'), steps = $$('.sstep'), vis = $('.story-vis');
+  let SW = 0, SH = 0, sd = 1, storyVis = false, lastChap = -1;
+  const SR = mulberry32(77), stars = Array.from({ length: 170 }, () => ({ x: SR(), y: SR(), m: SR() ** 2.2 }));
+  const A = [0.27, 0.66], B = [0.71, 0.34];
+  const CAPS = ['Epochs, lined up on one sky grid', 'Difference, movers pop out', 'One pixel, 102 colours'];
+  function ssize() { const r = sc.getBoundingClientRect(); sd = Math.min(2, devicePixelRatio || 1); SW = r.width; SH = r.height; sc.width = Math.round(SW * sd); sc.height = Math.round(SH * sd); }
+  function gauss(x, m, s) { return Math.exp(-0.5 * ((x - m) / s) ** 2); }
+  function spec(l) { const rise = 1 / (1 + Math.exp(-(l - 1.25) * 3.4)), fall = 1 - 0.3 * Math.max(0, l - 2.3) / 2.7; const tau = 0.62 * gauss(l, 3.05, 0.17) + 0.26 * gauss(l, 4.27, 0.05) + 0.14 * gauss(l, 4.67, 0.045); return { cont: 0.08 + 0.9 * rise * fall, flux: (0.08 + 0.9 * rise * fall) * Math.exp(-tau) }; }
+  function storyF() {
+    const cs = steps.map(s => { const r = s.getBoundingClientRect(); return r.top + r.height / 2; });
+    const narrow = innerWidth <= 920, v = vis.getBoundingClientRect(), vc = narrow ? (v.bottom + innerHeight) / 2 : innerHeight / 2;
+    if (vc <= cs[0]) return 0; const n = cs.length; if (vc >= cs[n - 1]) { const lr = steps[n - 1].getBoundingClientRect(); return n - 1 + 0.6 * clamp((vc - cs[n - 1]) / (lr.height * 0.45)); }
+    for (let i = 0; i < n - 1; i++) if (vc < cs[i + 1]) return i + (vc - cs[i]) / (cs[i + 1] - cs[i]);
+    return 0;
+  }
+  function sdraw(f, t) {
+    const c = sx2; c.setTransform(sd, 0, 0, sd, 0, 0);
+    const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#050a1e'); g.addColorStop(1, '#020512'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+    const pad = 16, px = pad, py = pad, pw = SW - pad * 2, ph = SH - pad * 2 - 36;
+    const patchA = 1 - sm(1.55, 2.0, f), specA = sm(1.7, 2.15, f), mix = sm(0.75, 1.25, f), m = sm(0, 1, clamp(f)), ep = Math.min(2, Math.floor(m * 2.999));
+    const chap = f < 0.5 ? 0 : f < 1.5 ? 1 : 2; if (chap !== lastChap) { lastChap = chap; cap.textContent = CAPS[chap]; steps.forEach((s, i) => s.classList.toggle('on', i === chap)); }
+    if (patchA > 0.01) {
+      c.save(); c.globalAlpha = patchA; c.beginPath(); c.rect(px, py, pw, ph); c.clip();
+      const tr = mulberry32(900 + ep * 31 + Math.floor(t / 140) % 3);
+      for (let i = 0; i < 420; i++) { c.fillStyle = 'rgba(190,205,255,' + (0.03 + tr() * 0.08) + ')'; c.fillRect(px + tr() * pw, py + tr() * ph, 1.5 + tr() * 2, 1.5 + tr() * 2); }
+      for (const s of stars) {
+        const x = px + s.x * pw, y = py + s.y * ph, r = 0.6 + s.m * 3.4, a = (0.3 + 0.7 * s.m) * (1 - mix * 0.8);
+        if (s.m > 0.25) { const gl = c.createRadialGradient(x, y, 0, x, y, r * 4); gl.addColorStop(0, 'rgba(190,215,255,' + (a * 0.5) + ')'); gl.addColorStop(1, 'rgba(190,215,255,0)'); c.fillStyle = gl; c.beginPath(); c.arc(x, y, r * 4, 0, 6.283); c.fill(); }
+        c.fillStyle = 'rgba(' + (mix > 0.5 ? '170,180,200' : '230,240,255') + ',' + a + ')'; c.beginPath(); c.arc(x, y, r, 0, 6.283); c.fill();
+      }
+      const ax = px + A[0] * pw, ay = py + A[1] * ph, bx = px + B[0] * pw, by = py + B[1] * ph, mxp = lerp(ax, bx, m), myp = lerp(ay, by, m);
+      c.setLineDash([4, 5]); c.strokeStyle = 'rgba(255,255,255,' + (0.25 * (1 - mix * 0.5)) + ')'; c.lineWidth = 1; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
+      c.font = '10px "IBM Plex Mono", monospace'; c.textAlign = 'center';
+      [[0, 'E1'], [0.5, 'E2'], [1, 'E3']].forEach(([k, lb]) => { const x = lerp(ax, bx, k), y = lerp(ay, by, k); c.strokeStyle = 'rgba(255,255,255,' + (m >= k - 0.001 ? 0.55 : 0.2) + ')'; c.beginPath(); c.arc(x, y, 12, 0, 6.283); c.stroke(); c.fillStyle = 'rgba(255,255,255,.5)'; c.fillText(lb, x, y - 18); });
+      const mv = 1 - mix;
+      if (mv > 0.02) { const gl = c.createRadialGradient(mxp, myp, 0, mxp, myp, 26); gl.addColorStop(0, 'rgba(255,170,150,' + (0.9 * mv) + ')'); gl.addColorStop(1, 'rgba(255,120,100,0)'); c.fillStyle = gl; c.beginPath(); c.arc(mxp, myp, 26, 0, 6.283); c.fill(); c.fillStyle = 'rgba(255,225,210,' + mv + ')'; c.beginPath(); c.arc(mxp, myp, 4.5, 0, 6.283); c.fill(); }
+      if (mix > 0.02) {
+        [[bx, by, '255,160,60', '+', 'now'], [ax, ay, '90,160,255', '−', 'before']].forEach(([x, y, col, sg, lb]) => { const gl = c.createRadialGradient(x, y, 0, x, y, 30); gl.addColorStop(0, 'rgba(' + col + ',' + (0.95 * mix) + ')'); gl.addColorStop(1, 'rgba(' + col + ',0)'); c.fillStyle = gl; c.beginPath(); c.arc(x, y, 30, 0, 6.283); c.fill(); c.fillStyle = 'rgba(255,255,255,' + mix + ')'; c.font = '600 15px "IBM Plex Mono", monospace'; c.fillText(sg, x, y + 5); c.font = '10px "IBM Plex Mono", monospace'; c.fillStyle = 'rgba(' + col + ',' + mix + ')'; c.fillText(lb, x, y + 26); });
+        c.fillStyle = 'rgba(255,255,255,' + (0.75 * mix) + ')'; c.textAlign = 'left'; c.font = '11px "IBM Plex Mono", monospace'; c.fillText('difference: epoch 3 − epoch 1', px + 10, py + 18); c.textAlign = 'center';
+      } else { c.fillStyle = 'rgba(255,255,255,.55)'; c.textAlign = 'left'; c.font = '11px "IBM Plex Mono", monospace'; c.fillText('SPHEREx demo patch · epoch ' + (ep + 1) + ' of 3', px + 10, py + 18); c.textAlign = 'center'; }
+      c.restore();
+      c.save(); c.globalAlpha = patchA; c.strokeStyle = 'rgba(160,190,255,.35)'; c.lineWidth = 1; c.strokeRect(px + 0.5, py + 0.5, pw - 1, ph - 1);
+      const ty0 = py + ph + 20, tx0 = px + 20, tx1 = px + pw - 20; c.strokeStyle = 'rgba(255,255,255,.25)'; c.beginPath(); c.moveTo(tx0, ty0); c.lineTo(tx1, ty0); c.stroke();
+      [0, 0.5, 1].forEach((k, i) => { const x = lerp(tx0, tx1, k); c.fillStyle = m >= k - 0.001 ? '#8fd3ff' : 'rgba(255,255,255,.3)'; c.beginPath(); c.arc(x, ty0, 4, 0, 6.283); c.fill(); });
+      c.fillStyle = '#ffd36b'; c.beginPath(); c.arc(lerp(tx0, tx1, m), ty0, 6, 0, 6.283); c.fill(); c.fillStyle = 'rgba(255,255,255,.45)'; c.font = '10px "IBM Plex Mono", monospace'; c.textAlign = 'right'; if (pw > 430) c.fillText('about six months between visits', tx1, ty0 + 14); c.restore();
+    }
+    if (specA > 0.01) {
+      c.save(); c.globalAlpha = specA;
+      const x0 = pad + 38, x1 = SW - pad - 6, y0 = pad + 34, y1 = SH - pad - 48, X = l => lerp(x0, x1, (l - 0.75) / 4.25), Y = v => lerp(y1, y0, v);
+      DET.forEach((d, i) => { c.fillStyle = 'rgba(120,160,255,' + (i % 2 ? 0.07 : 0.03) + ')'; c.fillRect(X(d.lo), y0, X(d.hi) - X(d.lo), y1 - y0); c.fillStyle = 'rgba(190,210,255,.45)'; c.font = '10px "IBM Plex Mono", monospace'; c.textAlign = 'center'; c.fillText('D' + d.n, (X(d.lo) + X(d.hi)) / 2, y0 - 8); });
+      c.strokeStyle = 'rgba(190,210,255,.35)'; c.lineWidth = 1; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x0, y1); c.lineTo(x1, y1); c.stroke();
+      c.fillStyle = 'rgba(190,210,255,.6)'; c.font = '10px "IBM Plex Mono", monospace'; c.textAlign = 'center'; [1, 2, 3, 4, 5].forEach(l => { c.fillText(l, X(l), y1 + 14); c.beginPath(); c.moveTo(X(l), y1); c.lineTo(X(l), y1 + 4); c.stroke(); });
+      c.fillText('wavelength (µm)', (x0 + x1) / 2, y1 + 30);
+      const r = sm(1.85, 2.5, f); c.setLineDash([3, 4]); c.strokeStyle = 'rgba(255,255,255,.3)'; c.beginPath();
+      for (let k = 0; k <= 100; k++) { const l = 0.75 + 4.25 * k / 100; if (l > 0.75 + 4.25 * r) break; const y = Y(spec(l).cont); k ? c.lineTo(X(l), y) : c.moveTo(X(l), y); } c.stroke(); c.setLineDash([]);
+      const nz = mulberry32(5);
+      for (let k = 0; k < 102; k++) { const l = 0.75 + 4.25 * k / 101; if (l > 0.75 + 4.25 * r) break; const v = spec(l).flux + (nz() - 0.5) * 0.025; c.fillStyle = '#9fd4ff'; c.beginPath(); c.arc(X(l), Y(v), 2.3, 0, 6.283); c.fill(); }
+      [[3.05, 'H₂O', '#7cc4ff'], [4.27, 'CO₂', '#ffb36b'], [4.67, 'CO', '#ff829e']].forEach(([l, nm, col], i) => {
+        const a = sm(l - 0.2, l + 0.1, 0.75 + 4.25 * r) * sm(2.0, 2.4, f); if (a < 0.02) return;
+        c.globalAlpha = specA * a; c.strokeStyle = col; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(l), y0); c.lineTo(X(l), y1); c.stroke(); c.setLineDash([]);
+        c.fillStyle = col; c.font = '600 13px "IBM Plex Sans", sans-serif'; c.textAlign = 'center'; c.fillText(nm, X(l), Y(spec(l).flux) + (l < 4 ? 22 : -14)); c.font = '10px "IBM Plex Mono", monospace'; c.fillText(l.toFixed(2) + ' µm', X(l), y1 - 6);
+      });
+      c.globalAlpha = specA; c.fillStyle = 'rgba(255,255,255,.75)'; c.font = '11px "IBM Plex Mono", monospace'; c.textAlign = 'left'; c.fillText('one pixel · simulated spectrum', x0, pad + 12);
+      c.restore();
+    }
+  }
+  let sfLast = -1;
+  function frame(t) { if (!storyVis) return; const f = storyF(); sdraw(f, t); sfLast = f; if (!reduce) requestAnimationFrame(frame); }
+  new IntersectionObserver(es => { const was = storyVis; storyVis = es[0].isIntersecting; if (storyVis && !was) requestAnimationFrame(frame); }, { rootMargin: '100px' }).observe($('#story'));
+
+  /* ---- hero loop ---- */
+  new IntersectionObserver(es => { const was = heroVis; heroVis = es[0].isIntersecting; if (heroVis && !was && !reduce) requestAnimationFrame(hloop); }, { threshold: 0 }).observe(hero);
+  function hloop(t) { if (!heroVis) return; hdraw(t); requestAnimationFrame(hloop); }
+
+  /* ---- counters ---- */
+  const run = el => {
+    const to = +el.dataset.to, dec = +(el.dataset.dec || 0);
+    if (reduce) { el.textContent = to.toFixed(dec); return; }
+    const t0 = performance.now(), d = 1500;
+    const step = now => { const k = clamp((now - t0) / d), e = 1 - Math.pow(1 - k, 3); el.textContent = (to * e).toFixed(dec); if (k < 1) requestAnimationFrame(step); else el.textContent = to.toFixed(dec); };
+    requestAnimationFrame(step);
+  };
+  const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('[data-to]').forEach(run); cio.unobserve(e.target); } }), { threshold: 0.4 });
+  $$('.stat').forEach(s => cio.observe(s));
+
+  /* ---- reveal on scroll ---- */
+  const tool = [...$$('.page .tabs-main, #view-sky .panel, #view-sky .sk-banner, #view-ice .icehead, #view-ice .panel, .page > .panel, #custom, #view-ice footer')];
+  tool.forEach((el, i) => { el.classList.add('reveal'); el.style.setProperty('--d', (i % 3) * 0.08 + 's'); });
+  if ('IntersectionObserver' in window) {
+    const rio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    $$('.reveal').forEach(el => rio.observe(el));
+  } else $$('.reveal').forEach(el => el.classList.add('in'));
+
+  /* ---- spotlight on panels and tilt on target cards ---- */
+  document.addEventListener('pointermove', e => {
+    const p = e.target.closest && e.target.closest('.panel, .tcard'); if (!p) return;
+    const r = p.getBoundingClientRect(); p.style.setProperty('--mx', (e.clientX - r.left) + 'px'); p.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    if (p.classList.contains('tcard') && !reduce) { p.style.setProperty('--ry', ((e.clientX - r.left) / r.width - 0.5) * 8 + 'deg'); p.style.setProperty('--rx', (0.5 - (e.clientY - r.top) / r.height) * 8 + 'deg'); }
+  });
+  document.addEventListener('pointerout', e => { const p = e.target.closest && e.target.closest('.tcard'); if (p && !p.contains(e.relatedTarget)) { p.style.setProperty('--rx', '0deg'); p.style.setProperty('--ry', '0deg'); } });
+
+  /* ---- target cards load the tool ---- */
+  $$('.tcard').forEach(b => b.addEventListener('click', () => {
+    const sky = $('#tab-sky'); if (sky && sky.getAttribute('aria-selected') !== 'true') sky.click();
+    const chip = document.querySelector('#sk-presets .chip[data-key="' + b.dataset.key + '"]'); if (chip) chip.click();
+    go('tool');
+  }));
+
+  /* ---- scroll handling ---- */
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false; const max = root.scrollHeight - innerHeight;
+      prog.style.transform = 'scaleX(' + (max > 0 ? clamp(scrollY / max) : 0) + ')';
+      nav.classList.toggle('show', scrollY > innerHeight * 0.55); topBtn.classList.toggle('show', scrollY > innerHeight * 1.1);
+      let cur = ''; navIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < innerHeight * 0.4) cur = id; });
+      $$('.navlinks button').forEach(b => b.classList.toggle('on', b.dataset.go === cur));
+      if (reduce && storyVis) sdraw(storyF(), 0);
+    });
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { hsize(); ssize(); if (reduce) { hdraw(0); sdraw(storyF(), 0); } }, 120); });
+  hsize(); ssize(); onScroll();
+  if (reduce) { hdraw(0); sdraw(storyF(), 0); } else { requestAnimationFrame(hloop); }
+  window.IceLanding = { go };
+})();
+
+</script>
+<script>
 /* 10 s intro. 0-3 black hole, 3-6 solar system emerges from it, 6-8.6 orbits and Sun collapse into the wordmark, hold, fade at 9.5-10. */
 (function () {
   const ov = document.getElementById('intro');
   if (!ov) return;
-  const pageEl = document.querySelector('.page');
+  const pageEl = document.getElementById('site') || document.querySelector('.page');
   try {
     const cv = document.getElementById('intro-cv'), cap = document.getElementById('intro-cap');
     const skipBtn = document.getElementById('intro-skip');
